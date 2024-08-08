@@ -52,11 +52,11 @@ function processData(rows) {
         const kelas = row[1];
         const batch = row[2];
 
-        if (classCounts[kelas] !== undefined) {
+        if (classCounts.hasOwnProperty(kelas)) {
             classCounts[kelas]++;
         }
 
-        if (batchCounts[batch] !== undefined) {
+        if (batchCounts.hasOwnProperty(batch)) {
             batchCounts[batch]++;
         } else {
             batchCounts["Pilihan Ganda"]++;
@@ -124,11 +124,11 @@ async function updateCharts() {
     const rows = await fetchData();
     const { classCounts, batchCounts } = processData(rows);
 
-    // Nama Angkatan Chart
-    createChart('namaAngkatanChart', batchCounts);
-
     // Kelas Chart
-    createChart('kelasChart', classCounts);
+    createChart('kelasChart', classCounts); // Menampilkan data kelas
+
+    // Nama Angkatan Chart
+    createChart('namaAngkatanChart', batchCounts); // Menampilkan data Nama Angkatan
 
     // Update Progress Bars
     updateProgressBar(batchCounts);
@@ -154,15 +154,15 @@ function showCustomAlert(message, onConfirm, onCancel) {
     }
 }
 
-window.onload = function() {
-    showCustomAlert(
-        'Udah ngisi form pemilihan nama angkatan blm? (klik CANCEL klo blm)',
-        function() {
-            // User clicked "Yes"
-        },
-        function() {
-            // User clicked "No"
-            window.open('https://forms.gle/EHbKP77aPvr95hxk7', '_blank');
-        }
-    );
-};
+// window.onload = function() {
+//     showCustomAlert(
+//         'Udah ngisi form pemilihan nama angkatan blm? (klik CANCEL klo blm)',
+//         function() {
+//             // User clicked "Yes"
+//         },
+//         function() {
+//             // User clicked "No"
+//             window.open('https://forms.gle/EHbKP77aPvr95hxk7', '_blank');
+//         }
+//     );
+// };
