@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Counting Pemilihan Nama Angkatan</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Live Counting Pemilihan Nama Angkatan</h1>
+
+    <div class="chart-container">
+        <canvas id="classChart"></canvas>
+        <canvas id="batchChart"></canvas>
+    </div>
+
+    <div class="progress-bars">
+        <h2>Progress Bar Nama Angkatan</h2>
+        <div class="progress">
+            <label for="option1">Vasterix</label>
+            <progress id="option1" value="0" max="100"></progress>
+        </div>
+        <div class="progress">
+            <label for="option2">Eterious</label>
+            <progress id="option2" value="0" max="100"></progress>
+        </div>
+        <div class="progress">
+            <label for="option3">Vamouster</label>
+            <progress id="option3" value="0" max="100"></progress>
+        </div>
+        <div class="progress">
+            <label for="option4">Pilihan Ganda</label>
+            <progress id="option4" value="0" max="100"></progress>
+        </div>
+    </div>
+
+    <div class="summary">
+        <p>Total Respon: <span id="totalResponses">0</span> dari 420 siswa</p>
+    </div>
+
+    <form id="aspirasiForm">
+        <h2>Kami Dengar dan Pertimbangkan Aspirasi-Mu!</h2>
+        <textarea id="message" placeholder="Tulis pesanmu di sini..." required></textarea>
+        <button type="submit">Kirim Aspirasi</button>
+    </form>
+
+    <script src="script.js"></script>
+</body>
+</html>
