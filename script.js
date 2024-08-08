@@ -135,7 +135,7 @@ function showCustomAlert(message, onConfirm, onCancel) {
 
 window.onload = function() {
     showCustomAlert(
-        'Apakah kamu sudah mengisi formulir pemilihan nama angkatan?',
+        'Udah ngisi form pemilihan nama angkatan blm? (klik CANCEL klo blm)',
         function() {
             // User clicked "Yes"
         },
