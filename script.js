@@ -129,6 +129,6 @@ window.onload = function() {
     if (confirm('Udah ngisi formulir pemilihan nama angkatan blm?')) {
         alert('Sip, makasih ya :)')
     } else {
-        window.location.href = 'https://forms.gle/EHbKP77aPvr95hxk7';
+        window.location.href = 'https://forms.gle/EHbKP77aPvr95hxk7', '_blank';
     }
 }
