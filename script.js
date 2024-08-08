@@ -4,30 +4,43 @@ const SHEET_NAME = 'Form Responses 1';
 
 const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}?key=${API_KEY}`;
 
-const totalStudents = 420;
-const classStudentCounts = {
-    "XII-1": 35,
-    "XII-2": 35,
-    "XII-3": 35,
-    "XII-4": 35,
-    "XII-5": 35,
-    "XII-6": 35,
-    "XII-7": 35,
-    "XII-8": 35,
-    "XII-9": 35,
-    "XII-10": 35,
-    "XII-11": 35,
-    "XII-12": 35
-};
+const graduationDate = new Date('2025-06-26T00:00:00');
 
-async function fetchData() {
-    const response = await fetch(url);
-    const data = await response.json();
-    return data.values;
+function updateCountdown() {
+    const now = new Date();
+    const timeDifference = graduationDate - now;
+
+    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+    document.getElementById('countdown').innerHTML = `
+        ${days} hari ${hours} jam ${minutes} menit ${seconds} detik
+    `;
+}
+
+function fetchData() {
+    return fetch(url)
+        .then(response => response.json())
+        .then(data => data.values);
 }
 
 function processData(rows) {
-    const classCounts = {};
+    const classCounts = {
+        "XII-1": 0,
+        "XII-2": 0,
+        "XII-3": 0,
+        "XII-4": 0,
+        "XII-5": 0,
+        "XII-6": 0,
+        "XII-7": 0,
+        "XII-8": 0,
+        "XII-9": 0,
+        "XII-10": 0,
+        "XII-11": 0,
+        "XII-12": 0
+    };
     const batchCounts = {
         "Vasterix": 0,
         "Eterious": 0,
@@ -39,15 +52,11 @@ function processData(rows) {
         const kelas = row[1];
         const batch = row[2];
 
-        // Menghitung jumlah Kelas
-        if (classCounts[kelas]) {
+        if (classCounts[kelas] !== undefined) {
             classCounts[kelas]++;
-        } else {
-            classCounts[kelas] = 1;
         }
 
-        // Menghitung jumlah Nama Angkatan
-        if (batchCounts[batch]) {
+        if (batchCounts[batch] !== undefined) {
             batchCounts[batch]++;
         } else {
             batchCounts["Pilihan Ganda"]++;
@@ -64,11 +73,9 @@ function updateProgressBar(batchCounts) {
     document.getElementById('option2').value = (batchCounts["Eterious"] / totalResponses) * 100;
     document.getElementById('option3').value = (batchCounts["Vamouster"] / totalResponses) * 100;
     document.getElementById('option4').value = (batchCounts["Pilihan Ganda"] / totalResponses) * 100;
-
-    document.getElementById('totalResponses').textContent = totalResponses;
 }
 
-function createChart(chartId, data, label) {
+function createChart(chartId, data) {
     const ctx = document.getElementById(chartId).getContext('2d');
     new Chart(ctx, {
         type: 'pie',
@@ -82,7 +89,13 @@ function createChart(chartId, data, label) {
                     '#FFCE56',
                     '#4BC0C0',
                     '#9966FF',
-                    '#FF9F40'
+                    '#FF9F40',
+                    '#FF5733',
+                    '#DAF7A6',
+                    '#FFC300',
+                    '#C70039',
+                    '#900C3F',
+                    '#581845'
                 ]
             }]
         },
@@ -111,11 +124,18 @@ async function updateCharts() {
     const rows = await fetchData();
     const { classCounts, batchCounts } = processData(rows);
 
-    createChart('classChart', classCounts, 'Kelas');
-    createChart('batchChart', batchCounts, 'Nama Angkatan');
+    // Nama Angkatan Chart
+    createChart('namaAngkatanChart', batchCounts);
 
+    // Kelas Chart
+    createChart('kelasChart', classCounts);
+
+    // Update Progress Bars
     updateProgressBar(batchCounts);
 }
+
+updateCountdown();
+setInterval(updateCountdown, 1000); // Update countdown every second
 
 updateCharts();
 
@@ -124,6 +144,7 @@ document.getElementById('aspirasiForm').addEventListener('submit', function(even
     alert('Pesan Anda telah terkirim!');
     document.getElementById('message').value = '';
 });
+
 function showCustomAlert(message, onConfirm, onCancel) {
     const confirmation = window.confirm(message);
     if (confirmation) {
@@ -145,11 +166,3 @@ window.onload = function() {
         }
     );
 };
-
-// window.onload = function() {
-//     if (confirm('Udah ngisi formulir pemilihan nama angkatan blm?')) {
-//         alert('Sip, makasih ya :)')
-//     } else {
-//         window.location.href = 'https://forms.gle/EHbKP77aPvr95hxk7', '_blank';
-//     }
-// }
