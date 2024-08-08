@@ -124,11 +124,32 @@ document.getElementById('aspirasiForm').addEventListener('submit', function(even
     alert('Pesan Anda telah terkirim!');
     document.getElementById('message').value = '';
 });
-
-window.onload = function() {
-    if (confirm('Udah ngisi formulir pemilihan nama angkatan blm?')) {
-        alert('Sip, makasih ya :)')
+function showCustomAlert(message, onConfirm, onCancel) {
+    const confirmation = window.confirm(message);
+    if (confirmation) {
+        onConfirm();
     } else {
-        window.location.href = 'https://forms.gle/EHbKP77aPvr95hxk7', '_blank';
+        onCancel();
     }
 }
+
+window.onload = function() {
+    showCustomAlert(
+        'Apakah kamu sudah mengisi formulir pemilihan nama angkatan?',
+        function() {
+            // User clicked "Yes"
+        },
+        function() {
+            // User clicked "No"
+            window.open('https://forms.gle/EHbKP77aPvr95hxk7', '_blank');
+        }
+    );
+};
+
+// window.onload = function() {
+//     if (confirm('Udah ngisi formulir pemilihan nama angkatan blm?')) {
+//         alert('Sip, makasih ya :)')
+//     } else {
+//         window.location.href = 'https://forms.gle/EHbKP77aPvr95hxk7', '_blank';
+//     }
+// }
