@@ -1,5 +1,5 @@
-const SHEET_ID = 'YOUR_GOOGLE_SHEET_ID';
-const API_KEY = 'YOUR_GOOGLE_API_KEY';
+const SHEET_ID = '1bRSDJMOlb8CopdfPmM1hysHC_R8SIsKpGm6sYW2FTwA';
+const API_KEY = 'AIzaSyANn8qYhn5-okzBTkQiY0UaJQXVWnY3078';
 const SHEET_NAME = 'Form Responses 1';
 
 const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${SHEET_NAME}?key=${API_KEY}`;
