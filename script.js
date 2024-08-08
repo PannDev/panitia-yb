@@ -126,9 +126,9 @@ document.getElementById('aspirasiForm').addEventListener('submit', function(even
 });
 
 window.onload = function() {
-    if (confirm('Apakah kamu sudah mengisi formulir pemilihan nama angkatan?')) {
-        // Do nothing
+    if (confirm('Udah ngisi formulir pemilihan nama angkatan blm?')) {
+        alert('Sip, makasih ya :)')
     } else {
-        window.location.href = 'https://google.com';
+        window.location.href = 'https://forms.gle/EHbKP77aPvr95hxk7';
     }
 }
